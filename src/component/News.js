@@ -18,14 +18,15 @@ export class News extends Component {
         category: PropTypes.string,
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         console.log("Hello i am a constructor from news component");
         this.state = {
             articles: [],
             loading: false,
             page: 1
         }
+        document.title = `NewsMonkey - ${this.capitalize(this.props.category)}`;
     }
 
 
@@ -61,35 +62,42 @@ export class News extends Component {
         this.UpdateNews();
     }
 
-    render() {
-        return (
-            <>
-                <div className='container my-3'>
-                    <center><h2 className='text-primary'><b>NewsMonkey - Top Headlines</b></h2></center>
-                    <br />
-                    {this.state.loading && <Spinner />}
-                    <div className="row">
-                        {!this.state.loading && this.state.articles.map((element) => {
-                            return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title ? element.title.slice(0, 63) : ""} descp={element.description ? element.description.slice(0, 78) : ""} imageUrl={element.urlToImage} newsUrl={element.url} publishedAt={element.publishedAt} author={element.author} source={element.source.name} />
-                            </div>
-                        })}
-                    </div>
-                </div>
-                <br></br>
-                <br></br>
 
-                <div className="container d-flex justify-content-between">
-                    <button disabled={this.state.page <= 1} type="button" className="btn btn-primary btn-sm" onClick={this.handlePrevClick}>&larr; Previous</button>
-                    <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-primary btn-sm" onClick={this.handleNextClick}>Next &rarr;</button>
-                </div>
-
-                <br></br>
-                <br></br>
-            </>
-
-        )
+    capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
+
+
+render() {
+    return (
+        <>
+            <div className='container my-3'>
+                <center><h2 className='text-primary'><b>NewsMonkey - Top {this.capitalize(this.props.category)} headlines </b></h2></center>
+                <br />
+                {this.state.loading && <Spinner />}
+                <div className="row">
+                    {!this.state.loading && this.state.articles.map((element) => {
+                        return <div className="col-md-4" key={element.url}>
+                            <NewsItem title={element.title ? element.title.slice(0, 63) : ""} descp={element.description ? element.description.slice(0, 78) : ""} imageUrl={element.urlToImage} newsUrl={element.url} publishedAt={element.publishedAt} author={element.author} source={element.source.name} />
+                        </div>
+                    })}
+                </div>
+            </div>
+            <br></br>
+            <br></br>
+
+            <div className="container d-flex justify-content-between">
+                <button disabled={this.state.page <= 1} type="button" className="btn btn-primary btn-sm" onClick={this.handlePrevClick}>&larr; Previous</button>
+                <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-primary btn-sm" onClick={this.handleNextClick}>Next &rarr;</button>
+            </div>
+
+            <br></br>
+            <br></br>
+        </>
+
+    )
+}
 }
 
 export default News
