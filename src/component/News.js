@@ -66,16 +66,16 @@ export class News extends Component {
     }
 
 
-    handleNextClick = async () => {
-        this.setState({ page: this.state.page + 1 });
-        this.UpdateNews();
-    }
+    // handleNextClick = async () => {
+    //     this.setState({ page: this.state.page + 1 });
+    //     this.UpdateNews();
+    // }
 
 
-    handlePrevClick = async () => {
-        this.setState({ page: this.state.page - 1 })
-        this.UpdateNews();
-    }
+    // handlePrevClick = async () => {
+    //     this.setState({ page: this.state.page - 1 })
+    //     this.UpdateNews();
+    // }
 
     fetchMoreData = async () => {
         this.setState({ page: this.state.page + 1 })
